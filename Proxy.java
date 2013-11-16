@@ -66,6 +66,7 @@ public class Proxy implements Server.Service {
 	
 		// Define and create a thread to transmit bytes from client to server
 		Thread c2s = new Thread() {
+			@SuppressWarnings("deprecation")
 			public void run() {
 				byte[] buffer = new byte[2048];
 				int bytes_read;
@@ -88,6 +89,7 @@ public class Proxy implements Server.Service {
 	
 		// Define and create a thread to copy bytes from server to client.
 		Thread s2c = new Thread() {
+			@SuppressWarnings("deprecation")
 			public void run() {
 				byte[] buffer = new byte[2048];
 				int bytes_read;

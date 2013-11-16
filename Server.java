@@ -78,7 +78,8 @@ public class Server {
 	        		// Otherwise start a named service on the specified port.
 	        		// Dynamically load and instantiate a Service class
 	        		String serviceName = args[i++];
-	        		Class serviceClass = Class.forName(serviceName);
+	        		@SuppressWarnings("rawtypes")
+					Class serviceClass = Class.forName(serviceName);
 	        		Service service = (Service) serviceClass.newInstance();
 	        		int port = Integer.parseInt(args[i++]);
 	        		s.addService(service, port);
@@ -220,6 +221,7 @@ public class Server {
 	 **/
 	public synchronized void displayStatus(PrintWriter out) {
 	    // Display a list of all Services that are being provided
+		@SuppressWarnings("rawtypes")
 		Iterator keys = services.keySet().iterator();
 	
 		while (keys.hasNext()) {
@@ -232,6 +234,7 @@ public class Server {
 		out.print("MAX CONNECTIONS: " + maxConnections + "\n");
 	
 		// Display a list of all current connections
+		@SuppressWarnings("rawtypes")
 		Iterator conns = connections.iterator();
 	
 		while (conns.hasNext()) {
@@ -487,6 +490,7 @@ public class Server {
 							// dynamically load and instantiate it.
 							// Exceptions will be handled below
 							String serviceName = t.nextToken();
+							@SuppressWarnings("rawtypes")
 							Class serviceClass = Class.forName(serviceName);
 							Service service;
 		
