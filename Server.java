@@ -137,7 +137,7 @@ public class Server {
 		// Log it
 		log("Starting service " + service.getClass().getName() + " on port " + port);
 		// Start the listener running.
-		    listener.start();
+		listener.start();
 	}
 
 	/**

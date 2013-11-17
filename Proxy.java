@@ -14,6 +14,9 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
+
 
 /**
    * This is the class that implements the proxy service.  The serve() method
@@ -44,14 +47,25 @@ public class Proxy implements Server.Service {
 	
 		//try to establish connection
 		Socket server;
+		SSLSocket secureServer;
 		try { 
-			server = new Socket(host, port); 
-			from_server = server.getInputStream();
-			to_server = server.getOutputStream();
+			if(port!=443){
+				server = new Socket(host, port); 
+				from_server = server.getInputStream();
+				to_server = server.getOutputStream();
+			}
+			//not sure if this works or not...
+			else{
+				SSLSocketFactory factory = (SSLSocketFactory) SSLSocketFactory.getDefault(); 
+				secureServer = (SSLSocket) factory.createSocket(host, port);
+				from_server = secureServer.getInputStream();
+				to_server = secureServer.getOutputStream();
+			}
 		}
 		catch (Exception e) {
 			PrintWriter pw = new PrintWriter(new OutputStreamWriter(out));
 			pw.println("Proxy server could not connect to " + host + ":" + port);
+			pw.println(e);
 			pw.flush();
 			pw.close();
 			try { 
