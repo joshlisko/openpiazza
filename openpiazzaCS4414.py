@@ -9,6 +9,7 @@ from google.appengine.ext import db
 import math
 import json
 import jinja2
+import json
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -31,6 +32,19 @@ MAIN_PAGE_HTML = """\
   </body>
 </html>
 """
+
+
+def getComments(firstComment, depth, self):
+    if len(firstComment)!=0:
+        self.response.write('<dl>')
+        for i in firstComment:
+            #prefix = '----'*depth
+            #self.response.write(prefix)
+            self.response.out.write('<dd>')
+            self.response.out.write(i['subject'])
+            getComments(i['children'],depth+1, self)
+            self.response.out.write('</dd>')
+        self.response.write('</dl>')
 
 
 class MainHandler(webapp2.RequestHandler):
@@ -56,46 +70,32 @@ class DisplayPostsHandler(webapp2.RequestHandler):
         #print login_resp.read()
         #self.response.out.write("Login: " + str(response.read()))
         
-        #while null_string != "null":
-        cid = 8
-        while cid < 10:
-            if cid == 1:
-                self.response.out.write("CID Post: " + str(cid))
-                page_url = 'https://piazza.com/logic/api?method=get.content'
-                page_params = '{"method":"content.get","params":{"cid"' + str(cid) + '","nid":"hiuvlqlyk4925d"}}'
-                page_response = opener.open(page_url, page_params)
-                page_response_string = str(page_response.read())
-                #self.response.out.write(page_response_string)
 
-                result_location = page_response_string.find("\"result\":")
-                result_string = page_response_string[result_location+9:]
-                null_string = result_string[:4]
-                #self.response.out.write(null_string)
+        cid = 1
+        
+        self.response.out.write("CID Post: " + str(cid))
+        self.response.out.write("\n")
+        page_url = 'https://piazza.com/logic/api?method=get.content'
+        page_params = '{"method":"content.get","params":{"cid":"' + str(cid) + '","nid":"hiuvlqlyk4925d"}}'
+        page_response = opener.open(page_url, page_params)
+        jarray = json.loads(str(page_response.read()))
 
-                content_location = page_response_string.find("\"content\":")
-                content_string = page_response_string[content_location+10:]
-                #self.response.out.write(str(page_response.read()))
-                self.response.out.write(str(content_string) + "\n")
-                cid += 1
-            else:
-                self.response.out.write("CID Post: " + str(cid))
-                page_url = 'https://piazza.com/logic/api?method=get.content'
-                page_params = '{"method":"content.get","params":{"cid":"' + str(cid) + '","nid":"hiuvlqlyk4925d"}}'
+        self.response.out.write(jarray['result']['history'][0]['subject'])
+        self.response.out.write("\n")
+        self.response.out.write(jarray['result']['history'][0]['content'])
+        self.response.out.write("\n")
+        self.response.out.write("\t")
+        #self.response.out.write(jarray['result']['children'][0]['subject'])
+        getComments(jarray['result']['children'], 1, self)
 
-                page_response = opener.open(page_url, page_params)
-                page_response_string = str(page_response.read())
-                #self.response.out.write(page_response_string)
 
-                result_location = page_response_string.find("\"result\":")
-                result_string = page_response_string[result_location+9:]
-                null_string = result_string[:4]
-                #self.response.out.write(null_string)
+    
 
-                content_location = page_response_string.find("\"content\":")
-                content_string = page_response_string[content_location+10:]
-                #self.response.out.write(str(page_response.read()))
-                self.response.out.write(str(content_string) + "\n")
-                cid += 1
+
+
+        
+        
+        
 
 
 application = webapp2.WSGIApplication([
