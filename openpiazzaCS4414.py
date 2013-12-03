@@ -22,17 +22,215 @@ from cookielib import CookieJar
 
 MAIN_PAGE_HTML = """\
 <html>
-  <body>
-    <h2>Open Piazza</h2>
-    <form action="/displayPosts" method="post">
-        Piazza email: <input type="text" name="email"><br>
-        Password: <input type="text" name="password">
-        <input type="submit" value="Submit">
-    </form>
-  </body>
+    <head>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+        <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet">
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <link href="http://plato.cs.virginia.edu/~cs4720f13arugula/phase5/extraCSS.css" rel="stylesheet">
+    </head>
+    <body>
+        
+        <div class="navbar navbar-default" role="navigation">
+            <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+          
+            </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+            <li><a href="">Home</a></li>
+            <li class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown">Class Info<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="http://localhost:10080/viewpostsperclass">View Class Posts</a></li>
+                  <li><a href="http://localhost:10080/registerclass">Register a class</a></li>
+                </ul>
+            </li>
+            <li>
+                <li><a href="http://localhost:10080/registerpost">Add a Post</a></li>
+            </li>
+            </div>
+        </div>
+        <h2>Open Piazza</h2>
+        <h4>Not a part of the home page, just for demo purposes</h4>
+        <form action="/displayPosts" method="post">
+            Piazza email: <input type="text" name="email"><br>
+            Password: <input type="text" name="password"><br>
+            <input type="submit" value="Submit">
+        </form>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p>By Evan Boyle, Josh Lisko, and Evan Teague</p>
+    </body>
 </html>
 """
 
+PostsPerClass_HTML = """\
+<html>
+    <head>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+        <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet">
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <link href="http://plato.cs.virginia.edu/~cs4720f13arugula/phase5/extraCSS.css" rel="stylesheet">
+    </head>
+    <body>
+        
+        <div class="navbar navbar-default" role="navigation">
+            <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+          
+            </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+            <li><a href="http://localhost:10080">Home</a></li>
+            <li class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown">Class Info<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="">View Class Posts</a></li>
+                  <li><a href="http://localhost:10080/registerclass">Register a class</a></li>
+                </ul>
+            </li>
+            <li>
+                <li><a href="http://localhost:10080/registerpost">Add a Post</a></li>
+            </li>
+            </div>
+        </div>
+        <h2>View Class Posts</h2>
+        <select>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </body>
+</html>
+"""
+
+RegisterClass_HTML = """\
+<html>
+    <head>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+        <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet">
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <link href="http://plato.cs.virginia.edu/~cs4720f13arugula/phase5/extraCSS.css" rel="stylesheet">
+    </head>
+    <body>
+        
+        <div class="navbar navbar-default" role="navigation">
+            <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+          
+            </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+            <li><a href="http://localhost:10080">Home</a></li>
+            <li class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown">Class Info<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="http://localhost:10080/viewpostsperclass">View Class Posts</a></li>
+                  <li><a href="">Register a class</a></li>
+                </ul>
+            </li>
+            <li>
+                <li><a href="http://localhost:10080/registerpost">Add a Post</a></li>
+            </li>
+            </div>
+        </div>
+        <h2>Register a Class</h2>
+        <form action="/" method="post">
+            Class Name: <input type="text" name = "classname"><br>
+            Piazza email: <input type="text" name="email"><br>
+            Password: <input type="text" name="password"><br>
+            <input type="submit" value="Submit">
+        </form>
+    </body>
+</html>
+"""
+
+
+AddPost_HTML = """\
+<html>
+    <head>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+        <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet">
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <link href="http://plato.cs.virginia.edu/~cs4720f13arugula/phase5/extraCSS.css" rel="stylesheet">
+    </head>
+    <body>
+        
+        <div class="navbar navbar-default" role="navigation">
+            <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+          
+            </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+            <li><a href="http://localhost:10080">Home</a></li>
+            <li class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown">Class Info<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="http://localhost:10080/viewpostsperclass">View Class Posts</a></li>
+                  <li><a href="http://localhost:10080/registerclass">Register a class</a></li>
+                </ul>
+            </li>
+            <li>
+                <li><a href="">Add a Post</a></li>
+            </li>
+            </div>
+        </div>
+        <h2>Add a Post</h2>
+            <select>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select><br>
+            <form action="/displayPosts" method="post">
+                CID: <input type="text" name = "cidvalue"><br>
+                <input type="submit" value="Submit">
+            </form>
+            
+    </body>
+</html>
+"""
 
 def getComments(firstComment, depth, self):
     if len(firstComment)!=0:
@@ -50,6 +248,28 @@ def getComments(firstComment, depth, self):
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         self.response.out.write(MAIN_PAGE_HTML)
+
+class DisplayPostsPerClassHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.out.write(PostsPerClass_HTML)
+
+class DisplayRegisterClassHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.out.write(RegisterClass_HTML)
+
+class DisplayAddPostHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.out.write(AddPost_HTML)
+
+class AddPostHandler(webapp2.RequestHandler):
+    def get(self):
+        #Insert code to add a post CID
+        self.response.out.write()
+
+class RegisterClassHandler(webapp2.RequestHandler):
+    def get(self):
+        #Insert code to add a class and credentials
+        self.response.out.write()
 
 class DisplayPostsHandler(webapp2.RequestHandler):
     def post(self):
@@ -71,7 +291,7 @@ class DisplayPostsHandler(webapp2.RequestHandler):
         #self.response.out.write("Login: " + str(response.read()))
         
 
-        cid = 1
+        cid = 120
         
         self.response.out.write("CID Post: " + str(cid))
         self.response.out.write("\n")
@@ -101,6 +321,11 @@ class DisplayPostsHandler(webapp2.RequestHandler):
 application = webapp2.WSGIApplication([
                                   ('/', MainHandler),
                                   ('/displayPosts', DisplayPostsHandler),
+                                  ('/viewpostsperclass', DisplayPostsPerClassHandler),
+                                  ('/registerclass', DisplayRegisterClassHandler),
+                                  ('/registerpost', DisplayAddPostHandler),
+                                  ('/addpost', AddPostHandler),
+                                  ('/addclass', RegisterClassHandler),
                                   
                                  
                                  

@@ -1,20 +1,15 @@
-application: locationfindercs4720
+application: openpiazzacs4414
 version: 1
 runtime: python27
 api_version: 1
 threadsafe: true
 
 handlers:
-- url: .*
-  script: locationfinder.application
-
+- url: /.*
+  script: openpiazzaCS4414.application
 
 libraries:
 - name: webapp2
-  version: "latest"
-
-builtins:
-- remote_api: on
-
-
-
+  version: latest
+- name: jinja2
+  version: latest
