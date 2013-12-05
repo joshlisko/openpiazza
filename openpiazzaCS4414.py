@@ -50,20 +50,20 @@ MAIN_PAGE_HTML = """\
             <li class="dropdown">
                 <a href="" class="dropdown-toggle" data-toggle="dropdown">Class Info<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="http://localhost:10080/viewpostsperclass">View Class Posts</a></li>
-                  <li><a href="http://localhost:10080/registerclass">Register a class</a></li>
+                  <li><a href="http://openpiazzacs4414.appspot.com/viewclasses">View Class Posts</a></li>
+                  <li><a href="http://openpiazzacs4414.appspot.com/registerclass">Register a class</a></li>
+                  <li><a href="http://openpiazzacs4414.appspot.com/displayPost/119/hiuvlqlyk4925d/nid=hiuvlqlyk4925d&auth=ee64796">Test Get Post</a></li>
                 </ul>
             </li>
             <li>
-                <li><a href="http://localhost:10080/registerpost">Add a Post</a></li>
+                <li><a href="http://openpiazzacs4414.appspot.com/registerpost">Add a Post</a></li>
             </li>
             </div>
         </div>
         <h2>Open Piazza</h2>
         <h4>Not a part of the home page, just for demo purposes</h4>
         <form action="/displayPosts" method="post">
-            Piazza email: <input type="text" name="email"><br>
-            Password: <input type="text" name="password"><br>
+            Demo account link: <input type="text" name="demoaccount"><br>
             <input type="submit" value="Submit">
         </form>
         <br>
@@ -101,16 +101,16 @@ PostsPerClass_HTML = """\
             </div>
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
-            <li><a href="http://localhost:10080">Home</a></li>
+            <li><a href="http://openpiazzacs4414.appspot.com/">Home</a></li>
             <li class="dropdown">
                 <a href="" class="dropdown-toggle" data-toggle="dropdown">Class Info<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="">View Class Posts</a></li>
-                  <li><a href="http://localhost:10080/registerclass">Register a class</a></li>
+                  <li><a href="http://openpiazzacs4414.appspot.com/viewclasses">View Class Posts</a></li>
+                  <li><a href="http://openpiazzacs4414.appspot.com/registerclass">Register a class</a></li>
                 </ul>
             </li>
             <li>
-                <li><a href="http://localhost:10080/registerpost">Add a Post</a></li>
+                <li><a href="http://openpiazzacs4414.appspot.com/registerpost">Add a Post</a></li>
             </li>
             </div>
         </div>
@@ -139,7 +139,7 @@ RegisterClass_HTML = """\
     </head>
     <body>
         
-        <div class="navbar navbar-default" role="navigation">
+         <div class="navbar navbar-default" role="navigation">
             <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -151,24 +151,24 @@ RegisterClass_HTML = """\
             </div>
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
-            <li><a href="http://localhost:10080">Home</a></li>
+            <li><a href="http://openpiazzacs4414.appspot.com/">Home</a></li>
             <li class="dropdown">
                 <a href="" class="dropdown-toggle" data-toggle="dropdown">Class Info<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="http://localhost:10080/viewpostsperclass">View Class Posts</a></li>
-                  <li><a href="">Register a class</a></li>
+                  <li><a href="http://openpiazzacs4414.appspot.com/viewclasses">View Class Posts</a></li>
+                  <li><a href="http://openpiazzacs4414.appspot.com/registerclass">Register a class</a></li>
                 </ul>
             </li>
             <li>
-                <li><a href="http://localhost:10080/registerpost">Add a Post</a></li>
+                <li><a href="http://openpiazzacs4414.appspot.com/registerpost">Add a Post</a></li>
             </li>
             </div>
         </div>
         <h2>Register a Class</h2>
-        <form action="/" method="post">
+        <form action="/addclass" method="post">
             Class Name: <input type="text" name = "classname"><br>
-            Piazza email: <input type="text" name="email"><br>
-            Password: <input type="text" name="password"><br>
+            Class suffix: <input type="text" name="suffix"><br>
+            Demo account link: <input type="text" name="demoaccount"><br>
             <input type="submit" value="Submit">
         </form>
     </body>
@@ -190,11 +190,10 @@ AddPost_HTML = """\
     </head>
     <body>
         
-        <div class="navbar navbar-default" role="navigation">
+         <div class="navbar navbar-default" role="navigation">
             <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -203,34 +202,41 @@ AddPost_HTML = """\
             </div>
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
-            <li><a href="http://localhost:10080">Home</a></li>
+            <li><a href="http://openpiazzacs4414.appspot.com/">Home</a></li>
             <li class="dropdown">
                 <a href="" class="dropdown-toggle" data-toggle="dropdown">Class Info<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="http://localhost:10080/viewpostsperclass">View Class Posts</a></li>
-                  <li><a href="http://localhost:10080/registerclass">Register a class</a></li>
+                  <li><a href="http://openpiazzacs4414.appspot.com/viewclasses">View Class Posts</a></li>
+                  <li><a href="http://openpiazzacs4414.appspot.com/registerclass">Register a class</a></li>
                 </ul>
             </li>
             <li>
-                <li><a href="">Add a Post</a></li>
+                <li><a href="http://openpiazzacs4414.appspot.com/registerpost">Add a Post</a></li>
             </li>
             </div>
         </div>
         <h2>Add a Post</h2>
-            <select>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-            </select><br>
-            <form action="/displayPosts" method="post">
+            <form action="/addpost" method="post">
+                Post Title: <input type="text" name= "posttitle"><br>
                 CID: <input type="text" name = "cidvalue"><br>
+                Class suffix: <input type="text" name="suffix"><br>
                 <input type="submit" value="Submit">
             </form>
             
     </body>
 </html>
 """
+
+class classes(db.Model):
+    class_name = db.StringProperty()
+    url_suffix = db.StringProperty()
+    demo_account = db.StringProperty()
+
+class posts(db.Model):
+    title = db.StringProperty()
+    cid = db.StringProperty()
+    url_suffix = db.StringProperty()
+    
 
 def getComments(firstComment, depth, self):
     if len(firstComment)!=0:
@@ -249,9 +255,19 @@ class MainHandler(webapp2.RequestHandler):
     def get(self):
         self.response.out.write(MAIN_PAGE_HTML)
 
-class DisplayPostsPerClassHandler(webapp2.RequestHandler):
+class DisplayClassesHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.out.write(PostsPerClass_HTML)
+        #self.response.out.write(PostsPerClass_HTML)
+        #allPosts = db.GqlQuery("""SELECT * FROM posts""")
+        allClasses = db.GqlQuery("""SELECT * FROM classes""")
+        allPosts = db.GqlQuery("""SELECT * FROM posts""")
+        template_values = {
+            #'postsArray': allPosts,
+            'classArray': allClasses,
+            'postsArray': allPosts,
+        }
+        template = JINJA_ENVIRONMENT.get_template('displayPostsPerClass.html')
+        self.response.write(template.render(template_values))
 
 class DisplayRegisterClassHandler(webapp2.RequestHandler):
     def get(self):
@@ -262,41 +278,67 @@ class DisplayAddPostHandler(webapp2.RequestHandler):
         self.response.out.write(AddPost_HTML)
 
 class AddPostHandler(webapp2.RequestHandler):
-    def get(self):
+    def post(self):
         #Insert code to add a post CID
-        self.response.out.write()
+        posttitle = self.request.get('posttitle')
+        postcid = self.request.get('cidvalue')
+        urlsuffix = self.request.get('suffix')
+        posts(title=posttitle, cid=postcid, url_suffix=urlsuffix).put()
+        #self.response.out.write()
 
 class RegisterClassHandler(webapp2.RequestHandler):
-    def get(self):
-        #Insert code to add a class and credentials
-        self.response.out.write()
-
-class DisplayPostsHandler(webapp2.RequestHandler):
     def post(self):
+        #Insert code to add a class and credentials
+        urlsuffix = self.request.get('suffix')
+        classname = self.request.get('classname')
+        demoaccount = self.request.get('demoaccount')
+        classes(class_name=classname, url_suffix=urlsuffix, demo_account=demoaccount).put()
+        #self.response.out.write()
 
-        piazza_email = self.request.get('email')
-        piazza_password = self.request.get('password')
+class ChooseClassHandler(webapp2.RequestHandler):
+    def get(self, classtitle):
+        classTitle = "\'" + classtitle + "\'"
+        foundClass = db.GqlQuery("""SELECT * FROM classes WHERE class_name = """+classTitle)
+        url_suffix = ""
+        demo_account = ""
+        for class1 in foundClass:
+            url_suffix = class1.url_suffix
+            demo_account = class1.demo_account
+
+        url_Suffix = "\'" + url_suffix + "\'"
+        foundCIDs = db.GqlQuery("""SELECT * FROM posts WHERE url_suffix = """+url_Suffix)
+
+
+        template_values2 = {
+            #'postsArray': allPosts,
+            'postsArray': foundCIDs,
+            'url_suffix': url_suffix,
+            'demo_account': demo_account,
+        }
+        template = JINJA_ENVIRONMENT.get_template('displayPostsPerClass2.html')
+        self.response.write(template.render(template_values2))
+
+        
+        
+        #Add another /url handler to handle passing the class to this file then it will load the appropriate CID
+class DisplayPostHandler(webapp2.RequestHandler):
+    def get(self, postCID, url_suffix, demo_account):
 
         cj = CookieJar()
         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-        url = 'https://piazza.com/logic/api?method=user.login'
-        params = '{"method":"user.login","params":{"email":"' + piazza_email + '","pass":"' + piazza_password + '"}}'
+        #url = 'https://piazza.com/demo_login?nid=hiuvlqlyk4925d&auth=ee64796'
+        #params = '{"method":"user.login","params":{"email":"' + piazza_email + '","pass":"' + piazza_password + '"}}'
+        url = 'https://piazza.com/demo_login?' + demo_account
+        cid = postCID
+        suffix = url_suffix
 
- 
-        # if the user/password match, the server respond will contain a session cookie
-        # that you can use to authenticate future requests.
-        response = opener.open(url, params)
+        response = opener.open(url)
 
-        #print login_resp.read()
-        #self.response.out.write("Login: " + str(response.read()))
-        
-
-        cid = 120
         
         self.response.out.write("CID Post: " + str(cid))
         self.response.out.write("\n")
         page_url = 'https://piazza.com/logic/api?method=get.content'
-        page_params = '{"method":"content.get","params":{"cid":"' + str(cid) + '","nid":"hiuvlqlyk4925d"}}'
+        page_params = '{"method":"content.get","params":{"cid":"' + str(cid) + '","nid":"' + str(suffix) + '"}}'
         page_response = opener.open(page_url, page_params)
         jarray = json.loads(str(page_response.read()))
 
@@ -307,25 +349,19 @@ class DisplayPostsHandler(webapp2.RequestHandler):
         self.response.out.write("\t")
         #self.response.out.write(jarray['result']['children'][0]['subject'])
         getComments(jarray['result']['children'], 1, self)
-
-
-    
-
-
-
+ 
         
-        
-        
-
 
 application = webapp2.WSGIApplication([
                                   ('/', MainHandler),
-                                  ('/displayPosts', DisplayPostsHandler),
-                                  ('/viewpostsperclass', DisplayPostsPerClassHandler),
+                                  ('/chooseClass/(.*)', ChooseClassHandler),
+                                  ('/viewclasses', DisplayClassesHandler),
                                   ('/registerclass', DisplayRegisterClassHandler),
                                   ('/registerpost', DisplayAddPostHandler),
                                   ('/addpost', AddPostHandler),
                                   ('/addclass', RegisterClassHandler),
+                                  ('/displayPost/(.*)/(.*)/(.*)', DisplayPostHandler),
+                                  #('/viewpostsperclass/(.*)/(.*)', DisplayPostsPerClassHandler),
                                   
                                  
                                  

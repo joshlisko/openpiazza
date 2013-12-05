@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+    <head>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+        <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet">
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <link href="http://plato.cs.virginia.edu/~cs4720f13arugula/phase5/extraCSS.css" rel="stylesheet">
+
+        <script>
+        $(document).ready(function() {
+            $("#postDisplaySubmit").click(function() {
+                var sel = document.getElementById('classList');
+                //item = sel.options[sel.selectedIndex].value;
+                item = sel.options[sel.selectedIndex].text;
+                $('#results').text(item);
+                var postSel = document.getElementById('postsList');
+                var length = postSel.options.length;
+                for (i = 0; i < length; i++) {
+                    postSel.options[i] = null;
+                }
+                //Still need to fix the if and delete for web and mobile
+                var classHash = new Hash({});
+                var postsHash = new Array({});
+                {% for class1 in classArray %}
+                    classHash["{{ class1.url_suffix}}" : "{{class1.class_name}}"];
+                {% endfor %}
+                {% for post in postsArray %}
+                    postsHash["{{ post.url_suffix}}" : "{{ post.cid }}"];
+                {% endfor %}
+
+                var classKeys = classHash.keys();
+                var postsKeys = postsHash.keys();
+                for (var i = 0; i < classHash.length; i++) {
+                    for (var j = 0; j < postsHash.length; j++){
+                        $('#results').text(classKeys[i]);
+                        //if (classKeys[i] == postsKeys[j]) {
+                          //  if (classHash[classKeys[i]] == item){
+                            //    postSel.options.add(new Option(postsHash[postsKeys[j]]))
+                            //}
+                        //}
+                    }
+                }
+                        
+                    
+                
+                
+                //$('#results').text(item);
+                //var url = 'http://openpiazzacs4414.appspot.com/chooseClass/' + item.replace(" ", "%20");
+                //$('#results').text(url);
+                //$.get('http://openpiazzacs4414.appspot.com/chooseClass/'+ item, function(data, status) {
+                    //alert("Data: " + data + "\nStatus: " + status);
+                    
+                    //$('#results').text(data)
+                //});
+            });
+        });
+        </script>
+       
+    </head>
+    <body>
+    <div class="navbar navbar-default" role="navigation">
+            <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+          
+            </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+            <li><a href="http://openpiazzacs4414.appspot.com/">Home</a></li>
+            <li class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown">Class Info<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="http://openpiazzacs4414.appspot.com/viewclasses">View Class Posts</a></li>
+                  <li><a href="http://openpiazzacs4414.appspot.com/registerclass">Register a class</a></li>
+                </ul>
+            </li>
+            <li>
+                <li><a href="http://openpiazzacs4414.appspot.com/registerpost">Add a Post</a></li>
+            </li>
+            </div>
+        </div>
+    
+    <select name="classList" form="submitClassTitle" id="classList">
+    {% for class in classArray %}
+       <option value={{ class.class_name }}>{{ class.class_name}}</option>
+            <!--<p>{{ class.class_name}}</p>-->
+    {% endfor %}
+    </select>
+
+   <!-- <form action="http://openpiazzacs4414.appspot.com/displayPosts" method="get" id="submitClassTitle">-->
+    
+    <!--</form>-->
+    <input type="submit" value="Submit" id="postDisplaySubmit">
+    <select name="postsList" form="submitPostCID" id="postsList">
+    </select>
+    <p id="results">results</p>
+        
+    
+    
+
+  </body>
+</html>
+{% endautoescape %}
