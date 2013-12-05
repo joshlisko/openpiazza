@@ -52,7 +52,6 @@ MAIN_PAGE_HTML = """\
                 <ul class="dropdown-menu">
                   <li><a href="http://openpiazzacs4414.appspot.com/viewclasses">View Class Posts</a></li>
                   <li><a href="http://openpiazzacs4414.appspot.com/registerclass">Register a class</a></li>
-                  <li><a href="http://openpiazzacs4414.appspot.com/displayPost/119/hiuvlqlyk4925d/nid=hiuvlqlyk4925d&auth=ee64796">Test Get Post</a></li>
                 </ul>
             </li>
             <li>
@@ -61,11 +60,7 @@ MAIN_PAGE_HTML = """\
             </div>
         </div>
         <h2>Open Piazza</h2>
-        <h4>Not a part of the home page, just for demo purposes</h4>
-        <form action="/displayPosts" method="post">
-            Demo account link: <input type="text" name="demoaccount"><br>
-            <input type="submit" value="Submit">
-        </form>
+        
         <br>
         <br>
         <br>
@@ -284,6 +279,7 @@ class AddPostHandler(webapp2.RequestHandler):
         postcid = self.request.get('cidvalue')
         urlsuffix = self.request.get('suffix')
         posts(title=posttitle, cid=postcid, url_suffix=urlsuffix).put()
+        self.redirect("/")
         #self.response.out.write()
 
 class RegisterClassHandler(webapp2.RequestHandler):
@@ -293,44 +289,60 @@ class RegisterClassHandler(webapp2.RequestHandler):
         classname = self.request.get('classname')
         demoaccount = self.request.get('demoaccount')
         classes(class_name=classname, url_suffix=urlsuffix, demo_account=demoaccount).put()
+        self.redirect("/")
         #self.response.out.write()
 
-class ChooseClassHandler(webapp2.RequestHandler):
-    def get(self, classtitle):
-        classTitle = "\'" + classtitle + "\'"
-        foundClass = db.GqlQuery("""SELECT * FROM classes WHERE class_name = """+classTitle)
-        url_suffix = ""
-        demo_account = ""
-        for class1 in foundClass:
-            url_suffix = class1.url_suffix
-            demo_account = class1.demo_account
 
-        url_Suffix = "\'" + url_suffix + "\'"
-        foundCIDs = db.GqlQuery("""SELECT * FROM posts WHERE url_suffix = """+url_Suffix)
-
-
-        template_values2 = {
-            #'postsArray': allPosts,
-            'postsArray': foundCIDs,
-            'url_suffix': url_suffix,
-            'demo_account': demo_account,
-        }
-        template = JINJA_ENVIRONMENT.get_template('displayPostsPerClass2.html')
-        self.response.write(template.render(template_values2))
-
-        
-        
-        #Add another /url handler to handle passing the class to this file then it will load the appropriate CID
 class DisplayPostHandler(webapp2.RequestHandler):
-    def get(self, postCID, url_suffix, demo_account):
+    def get(self, postCID, url_suffix):
 
         cj = CookieJar()
         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
         #url = 'https://piazza.com/demo_login?nid=hiuvlqlyk4925d&auth=ee64796'
         #params = '{"method":"user.login","params":{"email":"' + piazza_email + '","pass":"' + piazza_password + '"}}'
-        url = 'https://piazza.com/demo_login?' + demo_account
+        url_Suffix = "\'" + url_suffix + "\'"
+        demo_account = db.GqlQuery("""SELECT * FROM classes WHERE url_suffix = """+url_Suffix)
+        url = ""
+        for account in demo_account:
+            url = account.demo_account
+            
+        
         cid = postCID
         suffix = url_suffix
+        
+        response = opener.open(str(url))
+
+        
+        self.response.out.write("CID Post: " + str(cid))
+        self.response.out.write("\n")
+        page_url = 'https://piazza.com/logic/api?method=get.content'
+        page_params = '{"method":"content.get","params":{"cid":"' + str(cid) + '","nid":"' + str(suffix) + '"}}'
+        page_response = opener.open(page_url, page_params)
+        jarray = json.loads(str(page_response.read()))
+        key = "subject"
+        if jarray["error"] == "The post you are looking for cannot be found":
+            self.response.out.write("Blank Post")
+        else:
+            self.response.out.write(jarray['result']['history'][0]['subject'])
+            self.response.out.write("\n")
+            self.response.out.write(jarray['result']['history'][0]['content'])
+            self.response.out.write("\n")
+            self.response.out.write("\t")
+            #self.response.out.write(jarray['result']['children'][0]['subject'])
+            getComments(jarray['result']['children'], 1, self)
+        
+ 
+class DemoHandler(webapp2.RequestHandler):
+    def post(self):
+
+        cj = CookieJar()
+        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+        #url = 'https://piazza.com/demo_login?nid=hiuvlqlyk4925d&auth=ee64796'
+        #params = '{"method":"user.login","params":{"email":"' + piazza_email + '","pass":"' + piazza_password + '"}}'
+
+        url = self.request.get('demoaccount')
+        cid = self.request.get('cid')
+        suffix = self.request.get('url_suffix')
 
         response = opener.open(url)
 
@@ -349,19 +361,42 @@ class DisplayPostHandler(webapp2.RequestHandler):
         self.response.out.write("\t")
         #self.response.out.write(jarray['result']['children'][0]['subject'])
         getComments(jarray['result']['children'], 1, self)
- 
+
+class ViewPostsHandler(webapp2.RequestHandler):
+    def get(self, url_suffix):
+        url_Suffix = "\'" + url_suffix + "\'"
+        foundCIDs = db.GqlQuery("""SELECT * FROM posts WHERE url_suffix = """+url_Suffix)
+        
+
+        foundAccount = db.GqlQuery("""SELECT * FROM classes WHERE url_suffix = """+url_Suffix)
+        demo_account = ""
+        for class1 in foundAccount:
+            url_suffix = class1.url_suffix
+            demo_account = class1.demo_account
+
+        template_values2 = {
+            'postsArray': foundCIDs,
+            'url_suffix': url_suffix,
+            'demo_account': demo_account,
+        }
+
+
+        template = JINJA_ENVIRONMENT.get_template('displayPostsPerClass2.html')
+        self.response.write(template.render(template_values2))
+
+
         
 
 application = webapp2.WSGIApplication([
                                   ('/', MainHandler),
-                                  ('/chooseClass/(.*)', ChooseClassHandler),
                                   ('/viewclasses', DisplayClassesHandler),
                                   ('/registerclass', DisplayRegisterClassHandler),
                                   ('/registerpost', DisplayAddPostHandler),
                                   ('/addpost', AddPostHandler),
                                   ('/addclass', RegisterClassHandler),
-                                  ('/displayPost/(.*)/(.*)/(.*)', DisplayPostHandler),
-                                  #('/viewpostsperclass/(.*)/(.*)', DisplayPostsPerClassHandler),
+                                  ('/displayPost/(.*)/(.*)', DisplayPostHandler),
+                                  ('/demo', DemoHandler),
+                                  ('/viewPosts/(.*)', ViewPostsHandler),
                                   
                                  
                                  
